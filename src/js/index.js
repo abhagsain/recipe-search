@@ -1,7 +1,9 @@
 import Search from '../model/Search'
 const recipe = new Search('pizza');
 import {
-    elements
+    elements,
+    showLoader,
+    removeLoader
 } from '../view/elements'
 import * as searchView from '../view/searchView'
 // Create a Global state object which will store different states
@@ -20,8 +22,12 @@ const search = async () => {
         // Clear UI first 
         searchView.clearHTML();
 
+        // Show the loading icon 
+        showLoader(elements.showRecipeDiv);
         // Get the data
         await state.search.getData();
+
+        removeLoader();
         // Search the recipes
         searchView.renderHTML(state.search.result);
     }
