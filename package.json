@@ -12,7 +12,9 @@
   "author": "Anurag Bhagsain",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "babel-loader": "^7.1.5",
+    "babel-polyfill": "^6.26.0",
     "dotenv": "^6.2.0",
     "dotenv-webpack": "^1.6.0"
   },
