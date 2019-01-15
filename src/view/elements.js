@@ -3,6 +3,7 @@ export const elements = {
     searchInput: document.querySelector('.search__field'),
     showRecipe: document.querySelector('.results__list'),
     showRecipeDiv: document.querySelector('.results'),
+    buttonPage: document.querySelector('.results__pages'),
 }
 
 const DOMStrings = {
@@ -22,5 +23,7 @@ export const showLoader = (parentElement) => {
 
 export const removeLoader = () => {
     const loader = document.querySelector('.loader');
-    loader.parentNode.removeChild(loader);
+    if (loader) {
+        loader.parentNode.removeChild(loader);
+    }
 }
