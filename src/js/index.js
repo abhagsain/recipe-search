@@ -1,4 +1,5 @@
 import Search from "../model/Search";
+// import Recipe from '../model/Recipe'
 const recipe = new Search("pizza");
 import {
   elements,
@@ -6,6 +7,7 @@ import {
   removeLoader
 } from "../view/elements";
 import * as searchView from "../view/searchView";
+import Recipe from "../model/Recipe";
 // Create a GlobSal state object which will store different states
 var state = {};
 var x; //?
@@ -20,7 +22,6 @@ const search = async () => {
     elements.searchInput.value = "";
 
     // Clear UI first
-    //  I'm writting something really cool, that's gonna put the world on fire.
     searchView.clearHTML();
 
     // Show the loading icon
@@ -28,11 +29,12 @@ const search = async () => {
     // Get the data
     await state.search.getData();
 
+    // Removes the loading animation
     removeLoader();
-    // Search the recipes
+
+    // Render data to UI  
     searchView.renderHTML(state.search.result);
   }
-  // Render data to UI  
 };
 elements.search.addEventListener("submit", function (e) {
   e.preventDefault();
@@ -43,6 +45,31 @@ elements.buttonPage.addEventListener('click', (e) => {
   const button = e.target.closest('.btn-inline');
   if (button) {
     const whichPage = parseInt(button.dataset.goto, 10);
+    searchView.clearHTML();
     searchView.renderHTML(state.search.result, whichPage);
   }
-})
+});
+
+
+const controlRecipe = async () => {
+  // Get the hash from the URL 
+  const hash = window.location.hash.replace('#', '');
+  // If the Hash exists then 
+  // HASH === Recipe ID
+  // console.log("​controlRecipe -> hash", hash)
+  if (hash) {
+    state.recipe = new Recipe(hash);
+    try {
+
+      await state.recipe.getRecipeData();
+      // console.log("​controlRecipe -> state.recipe", state.recipe);
+
+    } catch (err) {
+
+    }
+  }
+  //  Get the data from the API corresponding to the ID
+  // Otherwise do nothing
+}
+
+['hashchange', 'load'].forEach(type => window.addEventListener(type, controlRecipe));

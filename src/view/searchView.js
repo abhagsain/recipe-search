@@ -17,9 +17,10 @@ const truncateTitle = (title, limit = 17) => {
     return title;
 }
 const render = (recipe) => {
+    console.log("​render -> recipe", recipe.recipe_id)
     const markup = `
     <li>
-        <a class="results__link" href="#23456">
+        <a class="results__link" href="#${recipe.recipe_id}">
             <figure class="results__fig">
                 <img src="${recipe.image_url}" alt="${recipe.publisher}">
             </figure>
@@ -35,10 +36,10 @@ const render = (recipe) => {
 const createButton = (page, type) => // page -> on which page are we?
     // type = next or prev
     `  <button class="btn-inline results__btn--${type}" data-goto=${type === 'prev' ? page -1 : page + 1}>
+    <span>Page ${type === 'prev' ? page - 1 : page + 1}</span>
             <svg class="search__icon">
                 <use href="img/icons.svg#icon-triangle-${type === 'prev' ? 'left' : 'right'}"></use>
             </svg>
-            <span>Page ${type === 'prev' ? page - 1 : page + 1}</span>
         </button>
     `;
 const renderButton = (page, totalResults, resultsPerPage) => {
@@ -71,5 +72,4 @@ export const renderHTML = (recipes, page = 1, resultsPerPage = 10) => {
 export const clearHTML = () => {
     elements.showRecipe.innerHTML = '';
     elements.buttonPage.innerHTML = '';
-
 }
