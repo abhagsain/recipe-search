@@ -17,7 +17,6 @@ const truncateTitle = (title, limit = 17) => {
     return title;
 }
 const render = (recipe) => {
-    console.log("​render -> recipe", recipe.recipe_id)
     const markup = `
     <li>
         <a class="results__link" href="#${recipe.recipe_id}">
@@ -42,6 +41,8 @@ const createButton = (page, type) => // page -> on which page are we?
             </svg>
         </button>
     `;
+
+    // Pagination 
 const renderButton = (page, totalResults, resultsPerPage) => {
     // Find the number of pages by dividing 
     // Total results by result per page
@@ -73,3 +74,33 @@ export const clearHTML = () => {
     elements.showRecipe.innerHTML = '';
     elements.buttonPage.innerHTML = '';
 }
+
+
+    /*
+        recipeView -> recipe 
+        Recipe {id: "47032", ingredients: Array(13), publisher: "The Pioneer Woman", source: "http://thepioneerwoman.com/cooking/2011/04/16-minute-meal-shrimp-scampi/", title: "Shrimp Scampi", …}
+        id: "47032"
+        image: "http://static.food2fork.com/scampibf5a.jpg"
+        ingredients: Array(13)
+        0: {count: 4, unit: "tbsp", ingredient: "butter"}
+        1: {count: 2, unit: "tbsp", ingredient: "olive oil"}
+        2: {count: 1, unit: "", ingredient: "whole medium onion, finely diced"}
+        3: {count: 4, unit: "", ingredient: "cloves garlic cloves, minced or pressed"}
+        4: {count: 1, unit: "pound", ingredient: "large shrimp, peeled and deveined"}
+        5: {count: 0.5, unit: "cup", ingredient: "white wine"}
+        6: {count: 2, unit: "", ingredient: "whole lemons"}
+        7: {count: 4, unit: "", ingredient: "dashes hot sauce"}
+        8: {count: 1, unit: "", ingredient: "salt and freshly ground black pepper, to taste"}
+        9: {count: 8, unit: "", ingredient: "oz, weight angel hair pasta"}
+        10: {count: 1, unit: "", ingredient: "chopped fresh basil to taste"}
+        11: {count: 1, unit: "", ingredient: "chopped fresh parsley, to taste"}
+        12: {count: 0.5, unit: "cup", ingredient: "grated parmesan cheese"}
+        length: 13
+        __proto__: Array(0)
+        publisher: "The Pioneer Woman"
+        servings: 4
+        source: "http://thepioneerwoman.com/cooking/2011/04/16-minute-meal-shrimp-scampi/"
+        title: "Shrimp Scampi"
+        totalTime: 75
+        __proto__: Object
+    */

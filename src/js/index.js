@@ -1,6 +1,6 @@
 import Search from "../model/Search";
 // import Recipe from '../model/Recipe'
-const recipe = new Search("pizza");
+import * as recipeView from '../view/recipeView';
 import {
   elements,
   showLoader,
@@ -8,7 +8,7 @@ import {
 } from "../view/elements";
 import * as searchView from "../view/searchView";
 import Recipe from "../model/Recipe";
-// Create a GlobSal state object which will store different states
+// Create a Global state object which will store different states
 var state = {};
 var x; //?
 
@@ -23,17 +23,24 @@ const search = async () => {
 
     // Clear UI first
     searchView.clearHTML();
+    try {
 
-    // Show the loading icon
-    showLoader(elements.showRecipeDiv);
-    // Get the data
-    await state.search.getData();
+      // Show the loading icon
+      showLoader(elements.showRecipeDiv);
+      // Get the data
+      await state.search.getData();
+      // Removes the loading animation
+      removeLoader();
 
-    // Removes the loading animation
-    removeLoader();
-
-    // Render data to UI  
-    searchView.renderHTML(state.search.result);
+      // Render data to UI  
+      if (state.search) {
+        searchView.renderHTML(state.search.result);
+      } else {
+        alert(err + 'Index.js');
+      }
+    } catch (err) {
+      console.log("​Index.js -> catch -> err", err)
+    }
   }
 };
 elements.search.addEventListener("submit", function (e) {
@@ -60,12 +67,17 @@ const controlRecipe = async () => {
   if (hash) {
     state.recipe = new Recipe(hash);
     try {
-
+      elements.recipeView.innerHTML = '';
+      showLoader(elements.recipeView);
       await state.recipe.getRecipeData();
-      // console.log("​controlRecipe -> state.recipe", state.recipe);
+      state.recipe.calculateTime();
+      state.recipe.calculateServings();
+      state.recipe.changeUnits();
+      recipeView.recipeView(state.recipe); //Render the recipe on the UI
+      removeLoader();
 
     } catch (err) {
-
+      alert(err + 'Index.js');
     }
   }
   //  Get the data from the API corresponding to the ID

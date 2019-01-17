@@ -4,6 +4,7 @@ export const elements = {
     showRecipe: document.querySelector('.results__list'),
     showRecipeDiv: document.querySelector('.results'),
     buttonPage: document.querySelector('.results__pages'),
+    recipeView: document.querySelector('.recipe'),
 }
 
 const DOMStrings = {
