@@ -35,7 +35,7 @@ const convertCount = count => {
     }
     return "1";
 };
-export const recipeView = recipe => {
+export const recipeView = (recipe, isLiked = false) => {
     const recipeMarkup = `
         <figure class="recipe__fig">
         <img src="${recipe.image}" alt="Tomato" class="recipe__img">
@@ -74,11 +74,10 @@ export const recipeView = recipe => {
                     </svg>
                 </button>
             </div>
-
         </div>
         <button class="recipe__love">
             <svg class="header__likes">
-                <use href="img/icons.svg#icon-heart-outlined"></use>
+                <use href="img/icons.svg#${isLiked ? "icon-heart" : "icon-heart-outlined"}"></use>
             </svg>
         </button>
     </div>

@@ -7,6 +7,10 @@ export const elements = {
     recipeView: document.querySelector('.recipe'),
     shoppingList: document.querySelector('.shopping__list'),
     addToCart: document.querySelector('.btn-small recipe__btn'),
+    likeButton: document.querySelector('.recipe__love'),
+    likeList: document.querySelector('.likes__list'),
+    likeIcon: document.querySelector('.likes__field'),
+
 }
 
 const DOMStrings = {

@@ -25,7 +25,7 @@ export class Shopping {
     }
   }
 
-  updateItem(id, newCount) {
+  updateCount(id, newCount) {
     //   update the count value
     this.items.find(el => el.id === id).count = newCount;
   }

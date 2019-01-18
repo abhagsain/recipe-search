@@ -61,7 +61,6 @@ export default class Recipe {
         el = el.replace(e, shortUnits[index]);
       });
       el = el.replace(/[()]/g, "");
-      console.log("​changeUnits -> el", el);
       // // console.log("​Recipe -> changeUnits -> el", el)
       // Now We have to extract Count i.e how many cups etc and Unit type from the String
       const arr = el.split(" "); // Split the string into array
@@ -102,6 +101,9 @@ export default class Recipe {
           unit: "",
           ingredient: el
         };
+      }
+      if (finalObj.count.toString().length > 3) {
+        finalObj.count = parseFloat(finalObj.count.toString().slice(0, 3));
       }
       return finalObj;
     });
