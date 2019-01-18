@@ -1,18 +1,42 @@
-import { elements } from "../view/elements";
+import {
+    elements
+} from "../view/elements";
+import {
+    Fraction
+} from "fractional";
 const createIngredient = ingredient => `
 <li class="recipe__item">
 <svg class="recipe__icon">
     <use href="img/icons.svg#icon-check"></use>
 </svg>
-<div class="recipe__count">${ingredient.count}</div>
+<div class="recipe__count">${convertCount(ingredient.count)}</div>
 <div class="recipe__ingredient">
     <span class="recipe__unit">${ingredient.unit}</span>
     ${ingredient.ingredient}
 </div>
 </li>
 `;
+const convertCount = count => {
+    // 2.5 -> 2 1/2
+    // 0.5 -> 1/2
+    // Split the number to into arr;
+    if (count) {
+        const [int, dec] = count.toString().split(".").map(el => parseInt(el));
+        if (!dec) return count;
+        if (int === 0) {
+            // int = 0 and count = 0.5
+            const num = new Fraction(count);
+            return `${num.numerator}/${num.denominator}`;
+        } else {
+            // 2.5, count - int = 0.5
+            const num = new Fraction(count - int); // 0.5 === 1/2
+            return `${int} ${num.numerator}/${num.denominator}`;
+        }
+    }
+    return "1";
+};
 export const recipeView = recipe => {
-  const recipeMarkup = `
+    const recipeMarkup = `
         <figure class="recipe__fig">
         <img src="${recipe.image}" alt="Tomato" class="recipe__img">
         <h1 class="recipe__title">
@@ -39,13 +63,13 @@ export const recipeView = recipe => {
             <span class="recipe__info-text"> servings</span>
 
             <div class="recipe__info-buttons">
-                <button class="btn-tiny">
+                <button class="btn-tiny btn_decrease">
                     <svg>
                         <use href="img/icons.svg#icon-circle-with-minus"></use>
                     </svg>
                 </button>
-                <button class="btn-tiny">
-                    <svg>
+                <button class="btn-tiny   btn_increase">
+                    <svg>   
                         <use href="img/icons.svg#icon-circle-with-plus"></use>
                     </svg>
                 </button>
@@ -65,7 +89,7 @@ export const recipeView = recipe => {
           .join("")}
         </ul>
 
-        <button class="btn-small recipe__btn">
+        <button class="btn-small recipe__btn-add">
             <svg class="search__icon">
                 <use href="img/icons.svg#icon-shopping-cart"></use>
             </svg>
@@ -92,5 +116,15 @@ export const recipeView = recipe => {
         </a>
     </div>
     `;
-  elements.recipeView.insertAdjacentHTML("afterbegin", recipeMarkup);
+    elements.recipeView.insertAdjacentHTML("afterbegin", recipeMarkup);
 };
+
+export const updateIngredients = (recipe) => {
+    if (recipe) {
+        document.querySelector('.recipe__info-data--people').textContent = recipe.servings;
+        const ingredientElements = Array.from(document.querySelectorAll(".recipe__count"));
+        ingredientElements.forEach((el, i) => {
+            el.textContent = convertCount(recipe.ingredients[i].count);
+        })
+    }
+}

@@ -5,6 +5,8 @@ export const elements = {
     showRecipeDiv: document.querySelector('.results'),
     buttonPage: document.querySelector('.results__pages'),
     recipeView: document.querySelector('.recipe'),
+    shoppingList: document.querySelector('.shopping__list'),
+    addToCart: document.querySelector('.btn-small recipe__btn'),
 }
 
 const DOMStrings = {
