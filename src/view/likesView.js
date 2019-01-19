@@ -7,8 +7,6 @@ import {
 export const renderLikedItem = (item) => {
     // Send the like item take out 
     // We need image url and title of the item
-    console.log('renderLikedItem -> called');
-    console.log(item);
     const markup = `
     <li>
     <a class="likes__link" href="#${item.id}"
@@ -34,8 +32,6 @@ export const removeLikedItem = (id) => {
     // remove the element from the UI using ID
     // const item = document.querySelector(`[data-likeid="${id}"]`);
     const item = document.querySelector(`[href*="${id}"]`);
-
-    console.log("​removeLikedItem -> item", item)
 
     item.parentElement.removeChild(item);
 }

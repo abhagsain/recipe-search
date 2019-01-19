@@ -11,14 +11,18 @@ export default class Recipe {
           this.id
         }`
       );
+      if (response.data.error.toString() !== 'limit') {
 
-      this.ingredients = response.data.recipe.ingredients;
-      this.publisher = response.data.recipe.publisher;
-      this.source = response.data.recipe.source_url;
-      this.title = response.data.recipe.title;
-      this.image = response.data.recipe.image_url;
+        this.ingredients = response.data.recipe.ingredients;
+        this.publisher = response.data.recipe.publisher;
+        this.source = response.data.recipe.source_url;
+        this.title = response.data.recipe.title;
+        this.image = response.data.recipe.image_url;
+      } else {
+        throw 'API limit reached! Only 50 calls are allowed in one day';
+      }
     } catch (err) {
-      alert(err + " Recipe.js");
+      throw err;
     }
   }
 
@@ -61,7 +65,7 @@ export default class Recipe {
         el = el.replace(e, shortUnits[index]);
       });
       el = el.replace(/[()]/g, "");
-      // // console.log("​Recipe -> changeUnits -> el", el)
+      // // // console.log("​Recipe -> changeUnits -> el", el)
       // Now We have to extract Count i.e how many cups etc and Unit type from the String
       const arr = el.split(" "); // Split the string into array
       // Find the position of units in the array from shortUnits array

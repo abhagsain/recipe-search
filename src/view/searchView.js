@@ -38,20 +38,16 @@ const render = recipe => {
 export const changeSelectedItemColor = itemId => {
     const searchedItems = Array.from(document.querySelectorAll(".results__link"));
     searchedItems.forEach(item => {
-        console.log("​item", item)
 
         item.classList.remove("results__link--active")
     });
     const item = document.querySelector(`a[href*="${itemId}"]`);
-    console.log("​changeSelectedItemColor -> item", item);
     if (item) {
         item.classList.add("results__link--active");
-        console.log("​changeSelectedItemColor -> item", item);
     }
     const ulItems = Array.from(document.querySelectorAll('.likes__list'));
     $('.likes__link').removeClass('results__link--active')
     ulItems.forEach(item => {
-        console.log('ulItems -> ', item);
         item.classList.remove("results__link--active")
     });
 };

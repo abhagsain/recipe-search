@@ -21,7 +21,6 @@ export class Shopping {
     if (index) {
       this.items.splice(index, 1); // returns the removed item
     } else {
-      console.log(`ShoppingList -> deleteItem -> Couldn't find item`);
     }
   }
 

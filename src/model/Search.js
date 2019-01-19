@@ -9,17 +9,12 @@ export default class Search {
             const content = await axios(URL);
             if (content.data.error === "limit") {
                 console.log("Limit exceeded");
-                return;
+                throw 'API Limit Exceeded only 50 calls are allowed in one day'
             } else {
-                console.log("​Search -> getData -> content", content)
-
                 this.result = content.data.recipes;
             }
         } catch (err) {
-            if (content.data.error === "limit") {
-                console.log("Limit exceeded");
-            }
-            console.log(`There's an error ${err}`);
+            throw err;
         }
     }
 }

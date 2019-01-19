@@ -16,6 +16,9 @@ import {
   Likes
 } from '../model/Likes';
 import * as likeView from '../view/likesView';
+import {
+  showMessage
+} from '../view/error';
 // Create a Global state object which will store different states
 var state = {};
 const showListItems = () => {
@@ -65,7 +68,8 @@ const search = async () => {
   const query = searchView.getUserInput();
   if (query.length > 0) {
     // Add the state to the global state object
-    state.search = new Search(query);
+    // state.search = new Search(query);
+    state.search = new Search('pasta');
     // Prepare UI for results
     elements.searchInput.value = "";
 
@@ -76,6 +80,7 @@ const search = async () => {
       // Show the loading icon
       showLoader(elements.showRecipeDiv);
       // Get the data
+
       await state.search.getData();
       // Removes the loading animation
       removeLoader();
@@ -84,11 +89,11 @@ const search = async () => {
       if (state.search) {
         searchView.renderHTML(state.search.result);
       } else {
-        console.log("​Index.js -> search -> catch -> err", err)
-
+        throw 'API Limit exceeded only 50 calls are allowed in one day';
       }
     } catch (err) {
-      console.log("​Index.js -> catch -> err", err)
+      showMessage(err);
+      removeLoader();
     }
   }
 };
@@ -108,7 +113,6 @@ elements.buttonPage.addEventListener('click', (e) => {
 
 const likeControl = () => {
 
-  console.log("​likeControl -> likeControl -> Called");
   if (!state.likes) {
     // Likes object
     state.likes = new Likes();
@@ -143,13 +147,9 @@ window.addEventListener('load', () => {
     likeView.renderLikedItem(like);
   });
   // elements.likeList
-  console.log("​elements.likeList", elements.likeList)
   const nodes = Array.from(document.querySelectorAll('.likes__link'));
-  console.log(nodes);
   if (nodes) {
-    console.log("​nodes", nodes)
     nodes.forEach(el => {
-      console.log('el -> ', el);
       el.classList.remove('results__link--active');
     });
   }
@@ -163,26 +163,29 @@ const controlRecipe = async () => {
   // HASH === Recipe ID
   // console.log("​controlRecipe -> hash", hash)
   if (hash) {
-    console.log("State", state);
     state.recipe = new Recipe(hash);
     try {
       elements.recipeView.innerHTML = '';
       showLoader(elements.recipeView);
       await state.recipe.getRecipeData();
-      state.recipe.calculateTime();
-      state.recipe.calculateServings();
-      state.recipe.changeUnits();
-      if (state.recipe) searchView.changeSelectedItemColor(hash);
-      if (state.likes) {
-        recipeView.recipeView(state.recipe, state.likes.isLiked(hash)); //Render the recipe on the UI
-      } else {
-        recipeView.recipeView(state.recipe);
-      }
-      removeLoader();
+      console.log('State -> recipe -> index.js', state.recipe);
+      if (state.recipe.publisher) {
 
+        state.recipe.calculateTime();
+        state.recipe.calculateServings();
+        state.recipe.changeUnits();
+        if (state.recipe) searchView.changeSelectedItemColor(hash);
+        if (state.likes) {
+          recipeView.recipeView(state.recipe, state.likes.isLiked(hash)); //Render the recipe on the UI
+        } else {
+          recipeView.recipeView(state.recipe);
+        }
+      }
+
+      removeLoader();
     } catch (err) {
-      console.log(err);
-      console.log("​Index.js -> controlRecipe -> catch -> err", err)
+      showMessage(err);
+      removeLoader();
 
     }
   }
@@ -196,7 +199,6 @@ elements.recipeView.addEventListener('click', (e) => {
   if (e.target.matches('.btn_decrease, .btn_decrease *')) {
     // Decrease
     if (state.recipe.servings > 1) {
-      console.log("​state.recipe.servings", state.recipe.servings)
       state.recipe.updateServings('dec');
       recipeView.updateIngredients(state.recipe);
     }
