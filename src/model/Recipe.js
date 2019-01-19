@@ -5,7 +5,6 @@ export default class Recipe {
   }
   async getRecipeData() {
     try {
-      console.log("Recipe -> this.id", this.id);
       const response = await axios(
         `https://www.food2fork.com/api/get?key=${process.env.API_KEY}&rId=${
           this.id
@@ -65,7 +64,6 @@ export default class Recipe {
         el = el.replace(e, shortUnits[index]);
       });
       el = el.replace(/[()]/g, "");
-      // // // console.log("​Recipe -> changeUnits -> el", el)
       // Now We have to extract Count i.e how many cups etc and Unit type from the String
       const arr = el.split(" "); // Split the string into array
       // Find the position of units in the array from shortUnits array

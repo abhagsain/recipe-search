@@ -159,16 +159,12 @@ const controlRecipe = async () => {
   // Get the hash from the URL 
 
   const hash = window.location.hash.replace('#', '');
-  // If the Hash exists then 
-  // HASH === Recipe ID
-  // console.log("​controlRecipe -> hash", hash)
   if (hash) {
     state.recipe = new Recipe(hash);
     try {
       elements.recipeView.innerHTML = '';
       showLoader(elements.recipeView);
       await state.recipe.getRecipeData();
-      console.log('State -> recipe -> index.js', state.recipe);
       if (state.recipe.publisher) {
 
         state.recipe.calculateTime();
