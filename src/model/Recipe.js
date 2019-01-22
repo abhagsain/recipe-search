@@ -10,15 +10,15 @@ export default class Recipe {
           this.id
         }`
       );
-      if (response.data.error.toString() !== 'limit') {
-
+      console.log(response);
+      if (response.data.error && response.data.error.toString() === 'limit') {
+        throw 'API limit reached! Only 50 calls are allowed in one day';
+      } else {
         this.ingredients = response.data.recipe.ingredients;
         this.publisher = response.data.recipe.publisher;
         this.source = response.data.recipe.source_url;
         this.title = response.data.recipe.title;
         this.image = response.data.recipe.image_url;
-      } else {
-        throw 'API limit reached! Only 50 calls are allowed in one day';
       }
     } catch (err) {
       throw err;
