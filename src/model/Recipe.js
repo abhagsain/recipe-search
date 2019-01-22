@@ -10,7 +10,6 @@ export default class Recipe {
           this.id
         }`
       );
-      console.log(response);
       if (response.data.error && response.data.error.toString() === 'limit') {
         throw 'API limit reached! Only 50 calls are allowed in one day';
       } else {
