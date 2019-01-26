@@ -1,6 +1,6 @@
 # Recipe-Search
 
-A JS Application mainly focused on async JS. Built with MVC pattern.
+A JS Application mainly focused on async JS. Built using MVC pattern.
 
 ## Snapshot
 
