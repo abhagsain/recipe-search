@@ -1,6 +1,8 @@
 # Recipe-Search
 
 A JS Application mainly focused on async JS. Built using MVC pattern.
+## See it in action 
+https://abhagsain.github.io/recipe-search/
 
 ## Snapshot
 
